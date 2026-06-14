@@ -1,8 +1,12 @@
-function data()
+local switches = {}
+
+function switches.data()
     return {
         A01 = {
-            modemID = {},
-            defaultState = {}
+            computerID = 1,
+            defaultState = 0
         }
     }
 end
+
+return switches

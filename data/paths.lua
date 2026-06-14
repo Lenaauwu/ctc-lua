@@ -1,4 +1,6 @@
-function data()
+local paths = {}
+
+function paths.data()
     return {
         A1B1 = {
             switches = {
@@ -11,3 +13,5 @@ function data()
         }
     }
 end
+
+return paths
