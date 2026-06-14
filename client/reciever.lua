@@ -5,19 +5,38 @@ local rsDecode = { --poor mans switch statement
     [2] = "Right"
 }
 
+function consoleLog(message)
+    local time = textutils.formatTime(os.time("utc"), true)
+    print(("%s >> %s "):format(time,message))
+end
+
 function setSwitch(direction) --redstone pulse in the wanted direction
     redstone.setOutput(rsDecode[direction],true)
     os.sleep(0.3)
     redstone.setOutput(rsDecode[direction],false)
 end
 
+function main()
+    while true do
+        repeat
+            id, message = rednet.receive()
+        until id == masterID
+        print(("Command %d received"):format(message))
+        setSwitch(message)
+    end
+end
+
 -- init
 local modem = peripheral.find("modem", rednet.open)
 
-while true do
-repeat
-    id, message = rednet.receive()
-until id == masterID
-print(("Command %d received"):format(message))
-setSwitch(message)
-end
+xpcall(function()
+    if rednet.isOpen() then
+        consoleLog("Receiver (re)booted successfully")
+        main()
+    else
+        error("Error: Rednet port not open, missing a modem?")
+    end
+end,
+consoleLog
+)
+
