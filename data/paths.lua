@@ -8,7 +8,8 @@ function paths.data()
                 {switchID = "A02", state = 0}
             },
             signals = {
-                "B01X"
+                "A1",
+                "B1",
             }
         }
     }
