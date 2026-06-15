@@ -6,7 +6,7 @@ function paths.data()
             switches = {
                 {switchID = "A01", state = 2},
                 {switchID = "A02", state = 0}
-            }
+            },
             signals = {
                 "B01X"
             }
