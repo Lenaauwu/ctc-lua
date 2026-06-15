@@ -1,20 +1,22 @@
 local systemState = {} -- this holds all the information
+local paths = require("data/paths")
+
 local switchController = require("controller/switchController")
 local signalController = require("controller/signalController")
 
 local reserveController = {}
 
 
-function reserveController.isPathFree(path)
+function reserveController.isPathFree(pathName)
 
     local blocks = {}
-    for signal in path.signals do
-        for block in signalController.getSignalBlocks(signal.blocks) do
+    for _, signal in pairs(paths.data()[pathName].signals) do
+        for _, block in pairs(signalController.getSignalBlocks(signal)) do
             blocks[#blocks+1] = block
         end
     end
 
-    for block in blocks do
+    for _, block in pairs(blocks) do
         -- check if block is in Systemstate
         -- if true then return false
     end
@@ -24,10 +26,10 @@ function reserveController.isPathFree(path)
     return true
 end
 
-function reserveController.reservePath(path)
+function reserveController.reservePath(pathName)
     -- add blocks, switches and signals to systemState
-    for switch in path.switches do
-        switchController.changeSwitch(switch.switchID, switch.state) 
+    for _, data in pairs(paths.data()[pathName].switches) do
+        switchController.changeSwitch(data.switchID, data.state) 
     end
 
     -- do signal stuff

@@ -2,8 +2,8 @@ local signals = require("data/signals")
 
 local signalController = {}
 
-function signalController.isSignal(signalId)
-    return signals[signalId] ~= nil
+function signalController.isSignal(signalID)
+    return signals.data()[signalID] ~= nil
 end
 
 function signalController.getSignalBlocks(signalID)
