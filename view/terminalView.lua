@@ -12,9 +12,9 @@ function terminalView.defaultTerminal()
             print("Type in stuff and stuff will happen. I swear")
         elseif input == "exit" then
             break
-        elseif #input > 4 then
-            local startSignalID = input[1] .. input[2]
-            local targetSignalID = input[3] .. input[4]
+        elseif #input == 4 then
+            local startSignalID = string.sub(input, 1, 2)
+            local targetSignalID = string.sub(input, 3, 4)
 
             if signalController.isSignal(startSignalID) then
                 if signalController.isSignal(targetSignalID) then
