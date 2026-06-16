@@ -1,4 +1,4 @@
-local systemState = {} -- this holds all the information
+local systemState = require("data/state")
 local paths = require("data/paths")
 
 local switchController = require("controller/switchController")
@@ -17,8 +17,9 @@ function reserveController.isPathFree(pathName)
     end
 
     for _, block in pairs(blocks) do
-        -- check if block is in Systemstate
-        -- if true then return false
+        if systemState.isLockedBlock(block) then
+            return false
+        end
     end
 
     -- check signals and switches?
@@ -27,6 +28,7 @@ function reserveController.isPathFree(pathName)
 end
 
 function reserveController.reservePath(pathName)
+    systemState.lockPath(paths.data()[pathName])
     -- add blocks, switches and signals to systemState
     for _, data in pairs(paths.data()[pathName].switches) do
         switchController.changeSwitch(data.switchID, data.state) 
@@ -35,5 +37,14 @@ function reserveController.reservePath(pathName)
     -- do signal stuff
 end
 
+function reserveController.unlockPath(pathName)
+    systemState.unlockPath(paths.data()[pathName])
+    -- add blocks, switches and signals to systemState
+    for _, data in pairs(paths.data()[pathName].switches) do
+        switchController.resetSwitch(data.switchID) 
+    end
+
+    -- do signal stuff
+end
 
 return reserveController
