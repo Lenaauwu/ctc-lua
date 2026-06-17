@@ -27,8 +27,8 @@ function reserveController.isPathFree(pathName)
     return true
 end
 
-function reserveController.reservePath(pathName)
-    systemState.lockPath(paths.data()[pathName])
+function reserveController.setPath(pathName,state)
+    systemState.pathState(paths.data()[pathName],state)
     -- add blocks, switches and signals to systemState
     for _, data in pairs(paths.data()[pathName].switches) do
         switchController.changeSwitch(data.switchID, data.state) 
@@ -37,14 +37,6 @@ function reserveController.reservePath(pathName)
     -- do signal stuff
 end
 
-function reserveController.unlockPath(pathName)
-    systemState.unlockPath(paths.data()[pathName])
-    -- add blocks, switches and signals to systemState
-    for _, data in pairs(paths.data()[pathName].switches) do
-        switchController.resetSwitch(data.switchID) 
-    end
 
-    -- do signal stuff
-end
 
 return reserveController

@@ -5,30 +5,16 @@ local lockedSwitches = {}
 local lockedSignals = {}
 local lockedBlocks = {}
 
-function state.lockPath(path)
+function state.pathState(path,lock)
     for _, switch in pairs(path.switches) do
-        lockedSwitches[switch.switchID] = true
+        lockedSwitches[switch.switchID] = lock
     end
 
     for _, signal in pairs(path.signals) do
-        lockedSignals[signal] = true
+        lockedSignals[signal] = lock
 
         for _, block in pairs(signalController.getSignalBlocks(signal)) do
-            lockedBlocks[block] = true
-        end
-    end
-end
-
-function state.unlockPath(path)
-    for _, switch in pairs(path.switches) do
-        lockedSwitches[switch.switchID] = false
-    end
-
-    for _, signal in pairs(path.signals) do
-        lockedSignals[signal] = false
-
-        for _, block in pairs(signalController.getSignalBlocks(signal)) do
-            lockedBlocks[block] = false
+            lockedBlocks[block] = lock
         end
     end
 end

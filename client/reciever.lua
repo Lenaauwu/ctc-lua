@@ -5,9 +5,9 @@ local rsDecode = { --poor mans switch statement
     [2] = "Right"
 }
 
-function consoleLog(message)
+function consoleLog(logMessage)
     local time = textutils.formatTime(os.time("utc"), true)
-    print(("%s >> %s "):format(time,message))
+    print(("%s >> %s "):format(time,logMessage))
 end
 
 function setSwitch(direction) --redstone pulse in the wanted direction
@@ -21,7 +21,7 @@ function main()
         repeat
             id, message = rednet.receive()
         until id == masterID
-        print(("Command %d received"):format(message))
+        consoleLog(message)
         setSwitch(message)
     end
 end

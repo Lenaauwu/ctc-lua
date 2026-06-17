@@ -2,32 +2,41 @@ local signals = {}
 
 function signals.data()
     return {
-        A1 = {
+        ZA3 = {
             computerID = 212,
             blocks = {
-                "11.1",
-                "11.2"
+                "A3"
             }
         },
-        A2 = {
+        ZA2 = {
             computerID = 212,
             blocks = {
-                "11.1",
-                "11.2"
+                "A2"
             }
         },
-        B1 = {
+        ZA1 = {
             computerID = 212,
             blocks = {
-                "11.1",
-                "11.2"
+                "A1"
             }
         },
-        B2 = {
+        ZA81 = {
             computerID = 231,
             blocks = {
-                "11.2",
-                "22.3"
+                "A81"
+            }
+        },
+        E301A = {
+            computerID = 212,
+            blocks = {
+                "301",
+                "302"
+            }
+        },
+        D301A = {
+            computerID = 212,
+            blocks = {
+                "301"
             }
         }
     }

@@ -2,14 +2,18 @@ local switches = {}
 
 function switches.data()
     return {
-        A01 = {
+        W101 = {
             computerID = 1,
             defaultState = 0
         },
-        A02 = {
-            computerID = 2,
+        W102 = {
+            computerID = 1,
             defaultState = 0
-        }
+        },
+        W103 = {
+            computerID = 1,
+            defaultState = 0
+        },
     }
 end
 
