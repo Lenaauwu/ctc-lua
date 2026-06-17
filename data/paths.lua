@@ -1,8 +1,13 @@
 local paths = {}
-
+--todo: add the rest of the segments for all blocks
 function paths.data()
     return {
         ["ZA3 302"] = {
+            segments = {
+                "A3",
+                "301",
+                "302"
+            },
             switches = {
                 {switchID = "W102", state = 1},
                 {switchID = "W101", state = 0},
@@ -15,6 +20,11 @@ function paths.data()
             }
         },
         ["ZA2 302"] = {
+            segments = {
+                "A2",
+                "301",
+                "302"
+            },
             switches = {
                 {switchID = "W102", state = 0},
                 {switchID = "W101", state = 0},
@@ -27,6 +37,11 @@ function paths.data()
             }
         },
         ["ZA1 302"] = {
+            segments = {
+                "A1",
+                "301",
+                "302"
+            },
             switches = {
                 {switchID = "W101", state = 2},
                 {switchID = "W103", state = 2},
