@@ -3,11 +3,20 @@ local pathController = require("controller/pathController")
 local reserveController = require("controller/reserveController")
 local terminalView = {}
 
-local function reservePath(startSignalID,endBlock)
+local function reservePath(operationType,startSignalID,endBlock)
     local pathToSet = pathController.getPath("" .. startSignalID .. endBlock)
+    if string.lower(operation) == "rafa" then
+        local blocksToCheck = #pathToSet -1 --skips checking the destination block
+    elseif string.lower(operation) == "zufa" then
+        local blocksToCheck = #pathToSet
+    else
+        error("Invalid Operation!")
+    end
     
-    for i in #pathToSet.segments do
-        -- todo: get occupancy of affected blocks 
+    for i=2 in blocksToCheck, 1 do
+        if not reserveController.isPathFree(pathToSet.segments(i)) then
+            error("One or more parts of the path are reserved!")
+        end
     end
 
     for i in #pathToSet.switches do
@@ -21,7 +30,7 @@ local function reservePath(startSignalID,endBlock)
 end
 
 function errorHandler(errorMessage)
-    --todo: like all of this
+    printError(("An error occurred: "):format(errorMessage))
 end
 
 --todo: rewrite this to fit the new params
@@ -73,7 +82,7 @@ function terminalView.defaultTerminal()
         elseif operation == "exit" or operation == "quit" then
             break
         elseif operation == "RAFA" or operation == "ZUFA" then
-            xpcall(reservePath(param1, param2),errorHandler)
+            xpcall(reservePath(operation, param1, param2),errorHandler)
         elseif operation == "BAT" then
             unlockBlock(param1)
         end

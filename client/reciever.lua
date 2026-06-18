@@ -5,6 +5,9 @@ local rsDecode = { --poor mans switch statement
     [2] = "Right"
 }
 
+-- init
+local modem = peripheral.find("modem", rednet.open)
+
 function consoleLog(logMessage)
     local time = textutils.formatTime(os.time("utc"), true)
     print(("%s >> %s "):format(time,logMessage))
@@ -25,9 +28,6 @@ function main()
         setSwitch(message)
     end
 end
-
--- init
-local modem = peripheral.find("modem", rednet.open)
 
 xpcall(function()
     if rednet.isOpen() then
