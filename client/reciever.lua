@@ -1,4 +1,4 @@
-local masterID = 1
+local serverID = settings.get("client_serverID")
 local rsDecode = { --poor mans switch statement
     [0] = "Back",
     [1] = "Left",
@@ -23,7 +23,7 @@ function main()
     while true do
         repeat
             id, message = rednet.receive()
-        until id == masterID
+        until id == serverID
         consoleLog(message)
         setSwitch(message)
     end
