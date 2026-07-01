@@ -22,12 +22,12 @@ local function reservePath(operationType,startSignalID,endBlock)
     end
 
     local switchesToSet = pathToSet[switches]
-    for i, #switchesToSet, 1 do
+    for i = 0, #switchesToSet, 1 do
         xpcall(switchController.changeSwitch(switchesToSet[i]["switchID"],switchesToSet[i]["state"]), errorHandler)
     end
 
     local signalsToSet = pathToSet["signals"]
-    for i, #signalsToSet, 1 do
+    for i = 0, #signalsToSet, 1 do
         --todo: signalController
     end
 
@@ -51,7 +51,7 @@ local function unlockBlock(input)
                 -- set path
                 reserveController.setPath(pathName,false)
                 print("Path " .. pathName .. " is no longer reserved.")
-            elseí
+            else
                 print("Not a valid Path")
             end
         else
@@ -67,13 +67,13 @@ function terminalView.defaultTerminal()
         write(">")
         local input = read(nil)
         local inputTable = {}
-        local temp
+        local temp = ""
         for i = 1, #input, 1 do
             local c = input:sub(i,i)
             if c == " " then
                 inputTable.insert(temp)
             else
-                temp .. c
+                temp = temp .. c
             end
         end
         local operation = temp[1]
