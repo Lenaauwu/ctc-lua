@@ -1,15 +1,18 @@
+local debugMode = true
+
 local signalController = require("controller/signalController")
 local pathController = require("controller/pathController")
 local reserveController = require("controller/reserveController")
 local switchController = require("controller/switchController")
+
 local terminalView = {}
 local blocksToCheck = 0
 
 local function reservePath(operationType,startSignalID,endBlock)
     local pathToSet = pathController.getPath("" .. startSignalID .. endBlock)
-    if string.lower(operation) == "rafa" then
+    if operation == "rafa" then
         blocksToCheck = #pathToSet -1 --skips checking the destination block
-    elseif string.lower(operation) == "zufa" then
+    elseif operation == "zufa" then
         blocksToCheck = #pathToSet
     else
         error("Invalid Operation!")
@@ -68,26 +71,34 @@ function terminalView.defaultTerminal()
         local input = read(nil)
         local inputTable = {}
         local temp = ""
-        for i = 1, #input, 1 do
+        for i = 1, input:len(), 1 do
             local c = input:sub(i,i)
             if c == " " then
-                inputTable.insert(temp)
+                table.insert(inputTable,temp)
+                temp = ""
             else
                 temp = temp .. c
             end
         end
-        local operation = temp[1]
-        local param1 = temp[2]
-        local param2 = temp[3]
+        table.insert(inputTable,temp)
 
+        if debugMode then
+            for i,v in pairs(inputTable) do
+                print(v)
+            end
+        end
+
+        local operation = inputTable[1]:lower()
+        local param1 = inputTable[2]:upper()
+        local param2 = inputTable[3]:upper()
 
         if operation == "help" then
             print("Type in stuff and stuff will happen. I swear")
         elseif operation == "exit" or operation == "quit" then
             break
-        elseif operation == "RAFA" or operation == "ZUFA" then
+        elseif operation == "rafa" or operation == "zufa" then
             xpcall(reservePath(operation, param1, param2),errorHandler)
-        elseif operation == "BAT" then
+        elseif operation == "bat" then
             unlockBlock(param1)
         end
     end
