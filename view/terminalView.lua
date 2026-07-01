@@ -3,13 +3,14 @@ local pathController = require("controller/pathController")
 local reserveController = require("controller/reserveController")
 local switchController = require("controller/switchController")
 local terminalView = {}
+local blocksToCheck = 0
 
 local function reservePath(operationType,startSignalID,endBlock)
     local pathToSet = pathController.getPath("" .. startSignalID .. endBlock)
     if string.lower(operation) == "rafa" then
-        local blocksToCheck = #pathToSet -1 --skips checking the destination block
+        blocksToCheck = #pathToSet -1 --skips checking the destination block
     elseif string.lower(operation) == "zufa" then
-        local blocksToCheck = #pathToSet
+        blocksToCheck = #pathToSet
     else
         error("Invalid Operation!")
     end
@@ -20,10 +21,10 @@ local function reservePath(operationType,startSignalID,endBlock)
         end
     end
 
-    for i in #pathToSet.switches do
+    for i, #pathToSet.switches do
         xpcall(switchController.changeSwitch(pathToSet.switches[i]["switchID"],pathToSet.switches[i]["state"]), errorHandler)
     
-        for i, #pathToSet.signals do
+    for i, #pathToSet.signals do
         --todo: signalController
     end
 
