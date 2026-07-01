@@ -21,10 +21,13 @@ local function reservePath(operationType,startSignalID,endBlock)
         end
     end
 
-    for i, #pathToSet.switches do
-        xpcall(switchController.changeSwitch(pathToSet.switches[i]["switchID"],pathToSet.switches[i]["state"]), errorHandler)
-    
-    for i, #pathToSet.signals do
+    local switchesToSet = pathToSet[switches]
+    for i, #switchesToSet, 1 do
+        xpcall(switchController.changeSwitch(switchesToSet[i]["switchID"],switchesToSet[i]["state"]), errorHandler)
+    end
+
+    local signalsToSet = pathToSet["signals"]
+    for i, #signalsToSet, 1 do
         --todo: signalController
     end
 
@@ -65,7 +68,7 @@ function terminalView.defaultTerminal()
         local input = read(nil)
         local inputTable = {}
         local temp
-        for i = 1, #input do
+        for i = 1, #input, 1 do
             local c = input:sub(i,i)
             if c == " " then
                 inputTable.insert(temp)
