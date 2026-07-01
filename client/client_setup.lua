@@ -1,5 +1,5 @@
 local setupDrive = peripheral.find("drive") --returns wrapped peripheral
-
+-- todo, print computer ID
 function wipeData()
     local files = fs.list("./")
     for i=1, #files do

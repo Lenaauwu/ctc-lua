@@ -1,6 +1,7 @@
 local signalController = require("controller/signalController")
 local pathController = require("controller/pathController")
 local reserveController = require("controller/reserveController")
+local switchController = require("controller/switchController")
 local terminalView = {}
 
 local function reservePath(operationType,startSignalID,endBlock)
@@ -13,17 +14,16 @@ local function reservePath(operationType,startSignalID,endBlock)
         error("Invalid Operation!")
     end
     
-    for i=2 in blocksToCheck, 1 do
+    for i=2, blocksToCheck, 1 do
         if not reserveController.isPathFree(pathToSet.segments(i)) then
             error("One or more parts of the path are reserved!")
         end
     end
 
     for i in #pathToSet.switches do
-        xpcall(switchController.changeSwitch(pathToSet.switches[i][switchID],pathToSet.switches[i][state]), errorHandler)
-    end
+        xpcall(switchController.changeSwitch(pathToSet.switches[i]["switchID"],pathToSet.switches[i]["state"]), errorHandler)
     
-    for i, #pathToSet.signals do
+        for i, #pathToSet.signals do
         --todo: signalController
     end
 
